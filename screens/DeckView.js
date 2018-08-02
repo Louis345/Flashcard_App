@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import DisplayCardList from '../components/displayCardList';
+import { HOC } from '../components/HOC/FlipCardHOC';
+const DisplayCardListWithDelete = HOC(DisplayCardList);
 import {
   Ionicons,
   MaterialIcons,
@@ -8,7 +10,6 @@ import {
   FontAwesome,
   MaterialCommunityIcons
 } from '@expo/vector-icons';
-import { List, ListItem } from 'react-native-elements';
 import getData from '../config/fetchData';
 
 export default class DeckView extends React.Component {
@@ -46,7 +47,7 @@ export default class DeckView extends React.Component {
       >
         <View style={styles.container}>
           {this.state.quizCards.map((quizName, index) => (
-            <DisplayCardList
+            <DisplayCardListWithDelete
               key={index}
               listName={quizName}
               quizSize={this.state.cardSize[index]}

@@ -2,7 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 const displayCardList = props => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => props.onPress()}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => props.onPress()}
+      onLongPress={e => {
+        console.log(' onLongPress');
+      }}
+    >
       <View style={styles.colorMarkContainer}>
         <View style={styles.colorMark} />
       </View>
