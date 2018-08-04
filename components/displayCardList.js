@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import fetchData from '../config/fetchData';
 const displayCardList = props => {
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => props.onPress()}
       onLongPress={e => {
-        console.log(' onLongPress');
+        props.deleteCard(props.listName);
       }}
     >
       <View style={styles.colorMarkContainer}>

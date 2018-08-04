@@ -13,9 +13,10 @@ import {
 import getData from '../config/fetchData';
 
 export default class DeckView extends React.Component {
-  state = { quizCards: [], cardSize: [] };
+  state = { quizCards: [], cardSize: [], isCardDeleting: false };
 
   componentDidMount() {
+    console.log('component did mount');
     const list = getData.getDecks();
 
     let cardSize = getData.getDeckSize(size => {
@@ -35,7 +36,19 @@ export default class DeckView extends React.Component {
 
     return cardSize;
   };
+
+  deleteCard = (title, idx) => {
+    const { quizCards } = this.state;
+    getData.removeDeck(title, () => {
+      this.setState({
+        isCardDeleting: !this.state.isCardDeleting,
+        quizCards: quizCards.filter((quizTitle, idx) => quizTitle !== title)
+      });
+    });
+  };
   render() {
+    const { isCardDeleting, quizCards } = this.state;
+
     return (
       <ScrollView
         contentContainerStyle={{
@@ -46,7 +59,7 @@ export default class DeckView extends React.Component {
         }}
       >
         <View style={styles.container}>
-          {this.state.quizCards.map((quizName, index) => (
+          {quizCards.map((quizName, index) => (
             <DisplayCardListWithDelete
               key={index}
               listName={quizName}
@@ -54,6 +67,7 @@ export default class DeckView extends React.Component {
               onPress={() =>
                 this.onNavigate([quizName, this.state.cardSize[index]])
               }
+              deleteCard={title => this.deleteCard(title, index)}
             />
           ))}
         </View>

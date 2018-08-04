@@ -50,10 +50,7 @@ export default class QuizCard extends Component {
   }
 
   componentDidMount() {
-    if (xOffset._value >= 375) {
-      console.log('here');
-      xOffset = new Animated.Value(0);
-    }
+    xOffset = new Animated.Value(0);
     counter = 0;
     const quizCards = fetchData.getDeck(this.props.navigation.state.params[0]);
     quizCards.then(card => {
