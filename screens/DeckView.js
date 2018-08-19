@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import DisplayCardList from '../components/displayCardList';
 import { HOC } from '../components/HOC/FlipCardHOC';
 const DisplayCardListWithDelete = HOC(DisplayCardList);
+
 import {
   Ionicons,
   MaterialIcons,
@@ -46,6 +47,7 @@ export default class DeckView extends React.Component {
       });
     });
   };
+  
   render() {
     const { isCardDeleting, quizCards } = this.state;
 

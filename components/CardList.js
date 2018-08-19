@@ -71,6 +71,7 @@ export default class QuizCard extends Component {
     );
   }
 
+
   scrollToNextCard = () => {
     let { height, width } = Dimensions.get('window');
     const { deckLength, count } = this.state;
@@ -83,9 +84,11 @@ export default class QuizCard extends Component {
       animated: true
     });
   };
+  
 
   renderCard = (question, index) => {
-    this.state.flashcards &&
+  const {flashcards} = this.state;
+   flashcards &&
       (this.transitionAnimations = this.state.flashcards.map((card, index) => ({
         transform: [
           { perspective: 800 },
