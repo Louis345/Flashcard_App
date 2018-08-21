@@ -10,6 +10,7 @@ import CardOptions from '../screens/CardOptions';
 import CreateCard from '../screens/CreateCard';
 import DeckView from '../screens/DeckView';
 import CardList from '../components/CardList';
+import Dictionary from '../screens/Dictionary';
 import { HeaderTextStyle, HeaderBackgroundColor } from '../styles/colors';
 
 import {
@@ -44,6 +45,26 @@ const MainNavigator = createStackNavigator({
     screen: DeckView,
     navigationOptions: ({ navigation }) => ({
       title: 'Menu',
+      headerTintColor: '#7DE2D5',
+      headerStyle: {
+        backgroundColor: HeaderBackgroundColor
+      }
+    }),
+    header: navigation => ({
+      titleStyle: {
+        color: '#2C2B50',
+        fontFamily: 'MuseoSansRounded-300',
+        fontWeight: '300',
+        textAlign: 'center',
+        marginRight: 56
+      },
+      tintColor: '#43c2f0'
+    })
+  },
+  Dictionary: {
+    screen: Dictionary,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Dictionary',
       headerTintColor: '#7DE2D5',
       headerStyle: {
         backgroundColor: HeaderBackgroundColor

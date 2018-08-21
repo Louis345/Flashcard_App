@@ -53,10 +53,10 @@ export default class Menu extends React.Component {
               <Text style={[styles.fontStyle]}>Quiz</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.onNavigate('Dictionary')}>
             <View style={[styles.menuStyle]}>
               <FontAwesome name={'hand-pointer-o'} style={[styles.iconStyle]} />
-              <Text style={[styles.fontStyle]}>Select a Deck</Text>
+              <Text style={[styles.fontStyle]}>Dictonary</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
