@@ -5,7 +5,9 @@
   "devDependencies": {
     "jest-expo": "~27.0.0",
     "react-native-scripts": "1.14.0",
-    "react-test-renderer": "16.3.1"
+    "react-native-table-component": "^1.1.8",
+    "react-test-renderer": "16.3.1",
+    "unofficial-jisho-api": "^1.1.0"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -20,12 +22,22 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "commander": "^2.15.0",
+    "debug": "^3.1.0",
     "expo": "^27.0.1",
+    "html": "^1.0.0",
+    "html-entities": "^1.2.1",
+    "htmlparser": "^1.7.7",
+    "jsdom": "^11.6.2",
     "lottie-react-native": "^2.2.7",
+    "parser": "^0.1.4",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-elements": "^0.17.0",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
-    "react-navigation": "^2.0.4"
+    "react-navigation": "^2.0.4",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5"
   }
 }
