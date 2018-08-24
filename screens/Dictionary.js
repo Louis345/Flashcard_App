@@ -1,9 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import jisho from '../util/japaneseUtil';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native';
 import { FormInput } from 'react-native-elements';
 import axios from 'axios';
-import { Table, Row, Rows } from 'react-native-table-component';
+import {
+  Table,
+  Row,
+  TableWrapper,
+  Rows,
+  Cell
+} from 'react-native-table-component';
 export default class Dictionary extends React.Component {
   state = {
     lookUp: '',
@@ -11,19 +22,7 @@ export default class Dictionary extends React.Component {
     loading: false,
     tableHead: ['English', 'Japanese']
   };
-  componentDidMount() {
-    jisho.searchForExamples('日').then(result => {
-      console.log('Jisho Uri: ' + result.uri);
-      console.log();
-      for (let i = 0; i < 3; ++i) {
-        let example = result.results[i];
-        console.log(example.kanji);
-        console.log(example.kana);
-        console.log(example.english);
-        console.log();
-      }
-    });
-  }
+
   getTranslation = word => {
     const { translation } = this.state;
     this.setState({
@@ -41,21 +40,30 @@ export default class Dictionary extends React.Component {
   };
 
   renderTableList = () => {
-    const { translation, tableData, tableHead } = this.state;
+    const { translation } = this.state;
+    const tableHead = ['Japanese', 'English'];
 
     return (
       translation && (
-        <View>
+        <ScrollView style={styles.dataWrapper}>
           <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
             <Row data={tableHead} style={styles.head} textStyle={styles.text} />
-            <Rows
-              data={translation.map(words => [
-                words.senses[0].english_definitions,
-                words.japanese[0].reading
-              ])}
-            />
+            <TableWrapper>
+              {translation.map((words, idx) => {
+                return (
+                  <TouchableOpacity onPress={() => console.log(idx)}>
+                    <Row
+                      data={[
+                        words.senses[0].english_definitions,
+                        words.japanese[0].reading
+                      ]}
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </TableWrapper>
           </Table>
-        </View>
+        </ScrollView>
       )
     );
   };
@@ -86,5 +94,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   head: { height: 40, backgroundColor: '#f1f8ff' },
-  text: { margin: 6 }
+  text: { margin: 6 },
+  dataWrapper: { marginBottom: 15 }
 });
