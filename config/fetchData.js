@@ -78,14 +78,13 @@ const api = {
       return error;
     }
   },
-  async addCardToDeck(key, cardInfo) {
-    console.log(key);
-    console.log(cardInfo);
+  async addCardToDeck(key, cardInfo, callback) {
     let card = AsyncStorage.getItem(key);
     card.then(info => {
       const restoredCard = JSON.parse(info);
       restoredCard.question.push(cardInfo);
       AsyncStorage.setItem(key, JSON.stringify(restoredCard));
+      callback && callback();
     });
   }
 };

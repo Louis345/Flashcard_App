@@ -8,6 +8,7 @@ import {
   FlatList
 } from 'react-native';
 import { FormInput, CheckBox, ListItem, List } from 'react-native-elements';
+import Toaster, { ToastStyles } from 'react-native-toaster';
 import axios from 'axios';
 import fetchData from '../config/fetchData';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -24,7 +25,8 @@ export default class Dictionary extends React.Component {
     loading: false,
     flashcards: null,
     englishWord: null,
-    japaneseWord: null
+    japaneseWord: null,
+    showSuccessMessage: false
   };
 
   componentDidMount() {
@@ -80,16 +82,20 @@ export default class Dictionary extends React.Component {
   );
 
   createFlashCard = listName => {
-    console.log(this.state.englishWord);
     const { englishWord, japaneseWord } = this.state;
-    fetchData.addCardToDeck(listName, {
-      question: englishWord,
-      answer: japaneseWord
-    });
-    this.setState({
-      showDeckList: false
-    });
+    fetchData.addCardToDeck(
+      listName,
+      {
+        question: englishWord,
+        answer: japaneseWord
+      },
+      this.setState({
+        showSuccessMessage: true,
+        showDeckList: false
+      })
+    );
   };
+
   getTranslation = word => {
     this.setState({
       loading: true
@@ -175,6 +181,7 @@ export default class Dictionary extends React.Component {
       </View>
     );
   };
+
   renderSeparator = () => {
     return (
       <View
@@ -187,8 +194,7 @@ export default class Dictionary extends React.Component {
     );
   };
   render() {
-    const { loading, showModal, showDeckList } = this.state;
-
+    const { loading, showModal, showDeckList, showSuccessMessage } = this.state;
     return loading ? (
       <View>
         <Spinner
@@ -219,6 +225,11 @@ export default class Dictionary extends React.Component {
           onEndEditing={e => this.getTranslation(e.nativeEvent.text)}
         />
         {showDeckList ? this.renderDeckList() : this.renderTableList()}
+        {showSuccessMessage && (
+          <Toaster
+            message={{ text: 'Sucess!!!!', styles: ToastStyles.success }}
+          />
+        )}
       </View>
     );
   }

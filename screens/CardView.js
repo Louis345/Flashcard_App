@@ -33,7 +33,6 @@ export default class CardView extends Component {
 
   render() {
     const { flashcards } = this.state;
-    console.log('test');
     return (
       <View style={styles.backgroundColor}>
         <ScrollCard list={flashcards}>
