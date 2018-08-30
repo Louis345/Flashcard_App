@@ -79,6 +79,8 @@ const api = {
     }
   },
   async addCardToDeck(key, cardInfo) {
+    console.log(key);
+    console.log(cardInfo);
     let card = AsyncStorage.getItem(key);
     card.then(info => {
       const restoredCard = JSON.parse(info);

@@ -23,7 +23,8 @@ export default class CardView extends Component {
   };
 
   componentDidMount() {
-    const quizCards = fetchData.getDeck(this.props.navigation.state.params[0]);
+    const quizCards = fetchData.getDecks();
+    console.log(quizCards);
     quizCards.then(card => {
       const quizData = JSON.parse(card);
       this.setState({ flashcards: quizData.question });
@@ -32,6 +33,7 @@ export default class CardView extends Component {
 
   render() {
     const { flashcards } = this.state;
+    console.log('test');
     return (
       <View style={styles.backgroundColor}>
         <ScrollCard list={flashcards}>
