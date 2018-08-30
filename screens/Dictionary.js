@@ -195,6 +195,7 @@ export default class Dictionary extends React.Component {
   };
   render() {
     const { loading, showModal, showDeckList, showSuccessMessage } = this.state;
+    console.log(showSuccessMessage);
     return loading ? (
       <View>
         <Spinner
@@ -227,6 +228,11 @@ export default class Dictionary extends React.Component {
         {showDeckList ? this.renderDeckList() : this.renderTableList()}
         {showSuccessMessage && (
           <Toaster
+            onHide={() => {
+              this.setState({
+                showSuccessMessage: false
+              });
+            }}
             message={{ text: 'Sucess!!!!', styles: ToastStyles.success }}
           />
         )}
