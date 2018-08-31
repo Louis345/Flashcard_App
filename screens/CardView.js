@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Animated,
-  Dimensions,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TouchableWithoutFeedback
-} from 'react-native';
-
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { backgroundColor } from '../styles/colors';
 import fetchData from '../config/fetchData';
 import ScrollCard from '../components/scrollCard';

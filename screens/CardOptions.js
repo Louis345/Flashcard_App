@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import fetchData from '../config/fetchData';
 import { Keyboard } from 'react-native';
-import { backgroundColor, fontStyle } from '../styles/colors.js';
+import { backgroundColor, buttonColor, lightCyan } from '../styles/colors.js';
 export default class CardOptions extends React.Component {
   onNavigate = () => {
     const { navigate } = this.props.navigation;
@@ -18,7 +18,7 @@ export default class CardOptions extends React.Component {
         <View style={{ alignItems: 'flex-end' }}>
           <MaterialIcons
             name={'delete'}
-            style={{ fontSize: 30, color: '#36414b' }}
+            style={{ fontSize: 30, color: buttonColor }}
             onPress={() => {
               fetchData.removeDeck(
                 this.props.navigation.state.params[0],
@@ -49,7 +49,7 @@ export default class CardOptions extends React.Component {
               raised
               onPress={this.onNavigate}
               title="Add A Card"
-              buttonStyle={{ backgroundColor: '#36414b' }}
+              buttonStyle={{ backgroundColor: '#36414b', color: lightCyan }}
             />
             <Button
               raised

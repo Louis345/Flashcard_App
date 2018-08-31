@@ -6,11 +6,12 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Button
 } from 'react-native';
-
-import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
-import { backgroundColor } from '../styles/colors';
+import Modal from 'react-native-modal';
+import { buttonColor, backgroundColor, lightCyan } from '../styles/colors';
+import { EvilIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import fetchData from '../config/fetchData';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -21,7 +22,8 @@ export default class QuizCard extends Component {
 
     this.state = {
       flipping: false,
-      count: 0
+      count: 0,
+      showModal: false
     };
 
     this.flipValue = new Animated.Value(0);
@@ -72,7 +74,7 @@ export default class QuizCard extends Component {
   }
 
   scrollToNextCard = () => {
-    let { height, width } = Dimensions.get('window');
+    let { width } = Dimensions.get('window');
     const { deckLength, count } = this.state;
     const cardPosition =
       count === deckLength ? this.setState({ count: 0 }) : count;
@@ -124,7 +126,6 @@ export default class QuizCard extends Component {
       })));
 
     if (this.state.flipped) {
-      console.log('flipping');
       const isFlipped = this.state.flipped[index];
       return (
         <View>
@@ -195,6 +196,33 @@ export default class QuizCard extends Component {
     }
   };
 
+  renderModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
+  renderModalContent = () => {
+    return (
+      <View style={styles.modalContent}>
+        <FontAwesome name="warning" size={70} color={'#f8bb86'} />
+        <Text style={styles.modalTitle}>Are you sure?</Text>
+        <Text style={styles.modalBottomText}>
+          Once deleted, you will not be able to recover the card!
+        </Text>
+        <View style={styles.modalButtonsContainer}>
+          <TouchableOpacity
+            onPress={this.renderModal}
+            style={styles.modalButtonCancel}
+          >
+            <Text>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.modalButtonOk}>
+            <Text>Ok</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
   flipCard = index => {
     if (this.state.flipping) return;
 
@@ -218,8 +246,34 @@ export default class QuizCard extends Component {
   };
 
   render() {
+    const { showModal } = this.state;
     return (
       <View style={styles.container}>
+        <Modal
+          isVisible={showModal}
+          backdropColor={'#ddd'}
+          backdropOpacity={0.5}
+          animationIn="zoomInDown"
+          animationOut="zoomOutUp"
+          animationInTiming={1000}
+          animationOutTiming={1000}
+          backdropTransitionInTiming={1000}
+          backdropTransitionOutTiming={1000}
+        >
+          {this.renderModalContent()}
+        </Modal>
+        <TouchableOpacity
+          style={{
+            justifyContent: 'flex-end',
+            flexDirection: 'row',
+            alignSelf: 'stretch',
+            marginRight: 25,
+            marginTop: 10
+          }}
+          onPress={this.renderModal}
+        >
+          <FontAwesome name="edit" size={25} color={buttonColor} />
+        </TouchableOpacity>
         <Animated.ScrollView
           scrollEnabled={!this.state.flipping}
           scrollEventThrottle={16}
@@ -247,6 +301,42 @@ const styles = StyleSheet.create({
   scrollView: {
     flexDirection: 'row',
     backgroundColor: backgroundColor
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    flex: 0.5,
+    marginTop: 50
+  },
+  modalTitle: {
+    color: 'rgba(0, 0, 0, .65)',
+    fontWeight: 'bold',
+    fontSize: 27
+  },
+  modalBottomText: {
+    fontSize: 16,
+    fontWeight: '400',
+    flexWrap: 'wrap',
+    padding: 20
+  },
+  modalButtonsContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    justifyContent: 'space-around'
+  },
+  modalButtonCancel: {
+    borderRadius: 4,
+    backgroundColor: '#efefef',
+    padding: 15,
+    marginRight: 15
+  },
+  modalButtonOk: {
+    borderRadius: 4,
+    backgroundColor: '#e64942',
+    padding: 15
   },
   scrollPage: {
     width: SCREEN_WIDTH,

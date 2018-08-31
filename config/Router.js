@@ -1,31 +1,67 @@
 import React from 'react';
-import { StyleSheet, Button, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator
 } from 'react-navigation';
 import Menu from '../screens/Menu';
-import CreateADeck from '../screens/CreateADeck';
 import CardOptions from '../screens/CardOptions';
 import CreateCard from '../screens/CreateCard';
 import DeckView from '../screens/DeckView';
+import CreateADeck from '../screens/CreateADeck';
 import CardList from '../components/CardList';
 import Dictionary from '../screens/Dictionary';
-import { HeaderTextStyle, HeaderBackgroundColor } from '../styles/colors';
-
 import {
-  Ionicons,
-  MaterialIcons,
-  Entypo,
-  FontAwesome,
-  IOSIcon
-} from '@expo/vector-icons';
+  HeaderTextStyle,
+  HeaderBackgroundColor,
+  lightCyan
+} from '../styles/colors';
+import { Ionicons } from '@expo/vector-icons';
+
+const createDeckNavigator = createStackNavigator({
+  DeckView: {
+    screen: CreateADeck,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Create A Deck',
+      headerTintColor: lightCyan,
+      headerStyle: {
+        backgroundColor: HeaderBackgroundColor
+      },
+      headerLeft: (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('DeckView');
+          }}
+        >
+          <Ionicons
+            name={'ios-arrow-back'}
+            onPress={() => {
+              navigation.navigate('Home');
+            }}
+            style={{ fontSize: 30, margin: 5, color: 'blue' }}
+          />
+        </TouchableOpacity>
+      )
+    }),
+    header: navigation => ({
+      titleStyle: {
+        color: '#2C2B50',
+        fontFamily: 'MuseoSansRounded-300',
+        fontWeight: '300',
+        textAlign: 'center',
+        marginRight: 56
+      },
+      tintColor: '#43c2f0'
+    })
+  }
+});
+
 const MainNavigator = createStackNavigator({
   Home: {
     screen: Menu,
     navigationOptions: ({ navigation }) => ({
       title: 'Menu',
-      headerTintColor: '#7DE2D5',
+      headerTintColor: lightCyan,
       headerStyle: {
         backgroundColor: HeaderBackgroundColor
       }
@@ -45,7 +81,7 @@ const MainNavigator = createStackNavigator({
     screen: DeckView,
     navigationOptions: ({ navigation }) => ({
       title: 'Menu',
-      headerTintColor: '#7DE2D5',
+      headerTintColor: lightCyan,
       headerStyle: {
         backgroundColor: HeaderBackgroundColor
       }
@@ -65,7 +101,7 @@ const MainNavigator = createStackNavigator({
     screen: Dictionary,
     navigationOptions: ({ navigation }) => ({
       title: 'Dictionary',
-      headerTintColor: '#7DE2D5',
+      headerTintColor: lightCyan,
       headerStyle: {
         backgroundColor: HeaderBackgroundColor
       }
@@ -85,7 +121,7 @@ const MainNavigator = createStackNavigator({
     screen: CardOptions,
     navigationOptions: ({ navigation }) => ({
       title: 'Card Info',
-      headerTintColor: '#7DE2D5',
+      headerTintColor: lightCyan,
       headerStyle: {
         backgroundColor: HeaderBackgroundColor
       },
@@ -133,7 +169,7 @@ const navigator = createStackNavigator({
     screen: Menu,
     navigationOptions: ({ navigation }) => ({
       title: 'Menu',
-      headerTintColor: '#7DE2D5',
+      headerTintColor: lightCyan,
       headerStyle: {
         backgroundColor: HeaderBackgroundColor
       }
@@ -148,30 +184,6 @@ const navigator = createStackNavigator({
       },
       tintColor: '#43c2f0'
     })
-  }
-});
-
-class MyNotificationsScreen extends React.Component {
-  navigationOptions = {
-    tabBarLabel: 'Create New Deck',
-    tabBarIcon: ({ tintColor }) => {
-      <Ionicons name={'ios-create'} style={[styles.iconStyle]} />;
-    }
-  };
-
-  render() {
-    return <Button onPress={() => alert('pressed')} title="Go back home" />;
-  }
-}
-
-const styles = StyleSheet.create({
-  icon: {
-    width: 26,
-    height: 26
-  },
-  iconStyle: {
-    color: '#7DE2D5',
-    fontSize: 30
   }
 });
 
@@ -191,7 +203,7 @@ const bottomNavigator = createBottomTabNavigator(
       })
     },
     CreateADeck: {
-      screen: CreateADeck,
+      screen: createDeckNavigator,
       navigationOptions: ({ navigation }) => ({
         title: 'Create A Deck',
         tabBarIcon: ({ tintColor }) => (
@@ -213,5 +225,15 @@ const bottomNavigator = createBottomTabNavigator(
     }
   }
 );
+const styles = StyleSheet.create({
+  icon: {
+    width: 26,
+    height: 26
+  },
+  iconStyle: {
+    color: lightCyan,
+    fontSize: 30
+  }
+});
 
 export default bottomNavigator;
