@@ -15,7 +15,6 @@ export default class CardView extends Component {
 
   componentDidMount() {
     const quizCards = fetchData.getDecks();
-    console.log(quizCards);
     quizCards.then(card => {
       const quizData = JSON.parse(card);
       this.setState({ flashcards: quizData.question });
@@ -28,7 +27,7 @@ export default class CardView extends Component {
       <View style={styles.backgroundColor}>
         <ScrollCard list={flashcards}>
           {this.state.flashcards &&
-            this.state.flashcards.map((question, idx) => {
+            this.state.flashcards.map(question => {
               return <Flashcard />;
             })}
         </ScrollCard>

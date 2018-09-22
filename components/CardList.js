@@ -10,7 +10,7 @@ import {
   Button
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { buttonColor, backgroundColor, lightCyan } from '../styles/colors';
+import { buttonColor, backgroundColor } from '../styles/colors';
 import { EvilIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import fetchData from '../config/fetchData';
 
@@ -78,7 +78,7 @@ export default class QuizCard extends Component {
     const { deckLength, count } = this.state;
     const cardPosition =
       count === deckLength ? this.setState({ count: 0 }) : count;
-    let cardIndex = this.state.flashcard;
+
     this.scrollView.getNode().scrollTo({
       x: cardPosition * width,
       y: 0,
@@ -87,9 +87,10 @@ export default class QuizCard extends Component {
   };
 
   renderCard = (question, index) => {
-    const { flashcards } = this.state;
+    const { flashcards, showModal } = this.state;
+
     flashcards &&
-      (this.transitionAnimations = this.state.flashcards.map((card, index) => ({
+      (this.transitionAnimations = flashcards.map((card, index) => ({
         transform: [
           { perspective: 800 },
           {
@@ -129,6 +130,19 @@ export default class QuizCard extends Component {
       const isFlipped = this.state.flipped[index];
       return (
         <View>
+          <Modal
+            isVisible={showModal}
+            backdropColor={'#ddd'}
+            backdropOpacity={0.5}
+            animationIn="zoomInDown"
+            animationOut="zoomOutUp"
+            animationInTiming={1000}
+            animationOutTiming={1000}
+            backdropTransitionInTiming={1000}
+            backdropTransitionOutTiming={1000}
+          >
+            {this.renderModalContent(index)}
+          </Modal>
           <View style={styles.scrollPage}>
             <TouchableWithoutFeedback
               key={index}
@@ -201,7 +215,8 @@ export default class QuizCard extends Component {
       showModal: !this.state.showModal
     });
   };
-  renderModalContent = () => {
+  renderModalContent = index => {
+    const { flashcards } = this.state;
     return (
       <View style={styles.modalContent}>
         <FontAwesome name="warning" size={70} color={'#f8bb86'} />
@@ -217,7 +232,13 @@ export default class QuizCard extends Component {
             <Text>Cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.modalButtonOk}>
-            <Text>Ok</Text>
+            <Text
+              onPress={() => {
+                fetchData.removeItem(flashcards[index].question);
+              }}
+            >
+              Ok
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -249,19 +270,6 @@ export default class QuizCard extends Component {
     const { showModal } = this.state;
     return (
       <View style={styles.container}>
-        <Modal
-          isVisible={showModal}
-          backdropColor={'#ddd'}
-          backdropOpacity={0.5}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={1000}
-          animationOutTiming={1000}
-          backdropTransitionInTiming={1000}
-          backdropTransitionOutTiming={1000}
-        >
-          {this.renderModalContent()}
-        </Modal>
         <TouchableOpacity
           style={{
             justifyContent: 'flex-end',

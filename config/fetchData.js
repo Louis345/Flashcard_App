@@ -78,6 +78,16 @@ const api = {
       return error;
     }
   },
+  removeItem(title, callback) {
+    console.log(title);
+    try {
+      AsyncStorage.removeItem(title);
+    } catch (error) {
+      console.log(error);
+      // Error saving data
+      return error;
+    }
+  },
   async addCardToDeck(key, cardInfo, callback) {
     let card = AsyncStorage.getItem(key);
     card.then(info => {
