@@ -29,12 +29,6 @@ The App
 ```
 ![sep-22-2018 16-38-05](https://user-images.githubusercontent.com/5923270/45921551-ea8f7c80-be85-11e8-857e-a31d9b9b3cbf.gif)
 
-And repeat
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 
